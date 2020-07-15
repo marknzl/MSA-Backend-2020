@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentSIMS.Data;
 using StudentSIMS.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace StudentSIMS.Controllers
 {
@@ -21,14 +20,12 @@ namespace StudentSIMS.Controllers
             _context = context;
         }
 
-        // GET: api/Students
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
         {
             return await _context.Students.ToListAsync();
         }
 
-        // GET: api/Students/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> GetStudent(int id)
         {
@@ -42,51 +39,39 @@ namespace StudentSIMS.Controllers
             return student;
         }
 
-        // PUT: api/Students/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStudent(int id, Student student)
         {
             if (id != student.StudentId)
-            {
                 return BadRequest();
-            }
 
-            _context.Entry(student).State = EntityState.Modified;
+            if (!StudentExists(id))
+                return BadRequest();
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StudentExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            var updateStudent = await _context.Students.FirstOrDefaultAsync(s => s.StudentId == student.StudentId);
+
+            _context.Entry(updateStudent).State = EntityState.Modified;
+
+            updateStudent.FirstName = student.FirstName;
+            updateStudent.LastName = student.LastName;
+            updateStudent.EmailAddress = student.EmailAddress;
+            updateStudent.PhoneNumber = student.PhoneNumber;
+
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        // POST: api/Students
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<Student>> PostStudent(Student student)
         {
-            _context.Students.Add(student);
+            student.TimeCreated = DateTime.Now;
+            await _context.Students.AddAsync(student);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetStudent", new { id = student.StudentId }, student);
         }
 
-        // DELETE: api/Students/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Student>> DeleteStudent(int id)
         {

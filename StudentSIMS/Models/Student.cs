@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace StudentSIMS.Models
 {
@@ -29,7 +25,6 @@ namespace StudentSIMS.Models
         [JsonPropertyName("phoneNumber")]
         public string PhoneNumber { get; set; }
 
-        [Timestamp]
         [JsonPropertyName("timeCreated")]
         public DateTime TimeCreated { get; set; }
     }
