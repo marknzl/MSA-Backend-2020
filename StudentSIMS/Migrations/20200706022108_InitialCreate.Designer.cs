@@ -8,7 +8,7 @@ using StudentSIMS.Data;
 
 namespace StudentSIMS.Migrations
 {
-    [DbContext(typeof(StudentContext))]
+    [DbContext(typeof(Data.StudentSIMSContext))]
     [Migration("20200706022108_InitialCreate")]
     partial class InitialCreate
     {

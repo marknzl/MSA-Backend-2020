@@ -9,7 +9,7 @@ using StudentSIMS.Data;
 
 namespace StudentSIMS.Migrations
 {
-    [DbContext(typeof(StudentContext))]
+    [DbContext(typeof(Data.StudentSIMSContext))]
     [Migration("20200706024748_StudentModelUpdate")]
     partial class StudentModelUpdate
     {

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentSIMS.Data;
 
 namespace StudentSIMS.Migrations
 {
-    [DbContext(typeof(StudentSIMSContext))]
-    partial class StudentContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(Data.StudentSIMSContext))]
+    [Migration("20200716032738_ModifiedAddress2")]
+    partial class ModifiedAddress2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,9 +40,6 @@ namespace StudentSIMS.Migrations
                     b.Property<int>("StreetNumber")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Suburb")
                         .HasColumnType("nvarchar(max)");
 
@@ -55,6 +54,9 @@ namespace StudentSIMS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
 
                     b.Property<string>("EmailAddress")
                         .HasColumnType("nvarchar(max)");
@@ -75,7 +77,18 @@ namespace StudentSIMS.Migrations
 
                     b.HasKey("StudentId");
 
+                    b.HasIndex("AddressId");
+
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("StudentSIMS.Models.Student", b =>
+                {
+                    b.HasOne("StudentSIMS.Models.Address", "Address")
+                        .WithMany("Students")
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

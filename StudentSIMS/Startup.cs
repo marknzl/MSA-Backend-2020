@@ -28,7 +28,7 @@ namespace StudentSIMS
         public void ConfigureServices(IServiceCollection services)
         {
             var connection = Configuration.GetConnectionString("schoolSIMSConnection");
-            services.AddDbContext<StudentContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<StudentSIMSContext>(options => options.UseSqlServer(connection));
 
             services.AddSwaggerGen(c =>
             {

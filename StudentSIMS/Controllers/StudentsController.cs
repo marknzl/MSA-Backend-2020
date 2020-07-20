@@ -13,9 +13,9 @@ namespace StudentSIMS.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        private readonly StudentContext _context;
+        private readonly Data.StudentSIMSContext _context;
 
-        public StudentsController(StudentContext context)
+        public StudentsController(Data.StudentSIMSContext context)
         {
             _context = context;
         }

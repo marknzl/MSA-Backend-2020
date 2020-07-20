@@ -6,16 +6,17 @@ using System.Collections.Specialized;
 
 namespace StudentSIMS.Data
 {
-    public class StudentContext : DbContext
+    public class StudentSIMSContext : DbContext
     {
-        public StudentContext()
+        public StudentSIMSContext()
         {
 
         }
 
-        public StudentContext(DbContextOptions<StudentContext> options) : base(options) { }
+        public StudentSIMSContext(DbContextOptions<StudentSIMSContext> options) : base(options) { }
 
         public DbSet<Student> Students { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         public static NameValueCollection AppSettings { get; }
 
