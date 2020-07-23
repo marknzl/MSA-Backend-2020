@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,9 +14,6 @@ namespace StudentSIMS.Models
         [Key]
         [JsonProperty("id")]
         public int Id { get; set; }
-
-        [JsonProperty("studentId")]
-        public int StudentId { get; set; }
 
         [JsonProperty("streetNumber")]
         public int StreetNumber { get; set; }
@@ -31,5 +29,11 @@ namespace StudentSIMS.Models
 
         [JsonProperty("postCode")]
         public string PostCode { get; set; }
+
+        [JsonProperty("studentId")]
+        public int StudentId { get; set; }
+
+        [JsonIgnore]
+        internal Student Student { get; set; }
     }
 }

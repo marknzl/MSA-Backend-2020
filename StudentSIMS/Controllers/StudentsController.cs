@@ -15,7 +15,7 @@ namespace StudentSIMS.Controllers
     {
         private readonly Data.StudentSIMSContext _context;
 
-        public StudentsController(Data.StudentSIMSContext context)
+        public StudentsController(StudentSIMSContext context)
         {
             _context = context;
         }

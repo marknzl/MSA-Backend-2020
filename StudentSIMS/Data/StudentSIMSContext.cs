@@ -29,5 +29,13 @@ namespace StudentSIMS.Data
 
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("schoolSIMSConnection"));
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.Address)
+                .WithOne(a => a.Student)
+                .HasForeignKey<Address>(a => a.StudentId);
+        }
     }
 }

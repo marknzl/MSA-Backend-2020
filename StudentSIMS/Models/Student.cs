@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -27,5 +28,9 @@ namespace StudentSIMS.Models
 
         [JsonPropertyName("timeCreated")]
         public DateTime TimeCreated { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [System.Text.Json.Serialization.JsonIgnore]
+        public Address Address { get; set; }
     }
 }

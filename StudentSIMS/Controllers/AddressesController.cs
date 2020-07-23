@@ -27,8 +27,8 @@ namespace StudentSIMS.Controllers
             return await _context.Addresses.ToListAsync();
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Address>> GetAddress(int id)
+        [HttpGet("ById/{id}")]
+        public async Task<ActionResult<Address>> GetAddressById(int id)
         {
             var address = await _context.Addresses.FindAsync(id);
 
@@ -40,8 +40,21 @@ namespace StudentSIMS.Controllers
             return address;
         }
 
+        [HttpGet("ByStudentId/{studentId}")]
+        public async Task<ActionResult<Address>> GetAddressByStudentId(int studentId)
+        {
+            var address = await _context.Addresses.FirstOrDefaultAsync(a => a.StudentId == studentId);
+
+            if (address == null)
+            {
+                return NotFound();
+            }
+
+            return address;
+        }
+
         [HttpPut("{studentId}")]
-        public async Task<IActionResult> PutAddressId(int studentId, Address address)
+        public async Task<IActionResult> PutAddress(int studentId, Address address)
         {
             if (studentId != address.StudentId)
             {

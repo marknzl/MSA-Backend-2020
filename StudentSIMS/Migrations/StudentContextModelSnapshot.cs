@@ -46,6 +46,9 @@ namespace StudentSIMS.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("StudentId")
+                        .IsUnique();
+
                     b.ToTable("Addresses");
                 });
 
@@ -76,6 +79,15 @@ namespace StudentSIMS.Migrations
                     b.HasKey("StudentId");
 
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("StudentSIMS.Models.Address", b =>
+                {
+                    b.HasOne("StudentSIMS.Models.Student", "Student")
+                        .WithOne("Address")
+                        .HasForeignKey("StudentSIMS.Models.Address", "StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
