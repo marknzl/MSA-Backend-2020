@@ -15,6 +15,12 @@ namespace StudentSIMS.Models
         [JsonProperty("id")]
         public int Id { get; set; }
 
+        [JsonProperty("studentId")]
+        public int StudentId { get; set; }
+
+        [JsonIgnore]
+        internal Student Student { get; set; }
+
         [JsonProperty("streetNumber")]
         public int StreetNumber { get; set; }
 
@@ -29,11 +35,5 @@ namespace StudentSIMS.Models
 
         [JsonProperty("postCode")]
         public string PostCode { get; set; }
-
-        [JsonProperty("studentId")]
-        public int StudentId { get; set; }
-
-        [JsonIgnore]
-        internal Student Student { get; set; }
     }
 }
