@@ -21,18 +21,27 @@ namespace StudentSIMS.Models
         [JsonIgnore]
         internal Student Student { get; set; }
 
+        [Required]
         [JsonProperty("streetNumber")]
         public int StreetNumber { get; set; }
 
+        [Required, MaxLength(100)]
         [JsonProperty("street")]
         public string Street { get; set; }
 
+        [Required, MaxLength(100)]
         [JsonProperty("suburb")]
         public string Suburb { get; set; }
 
+        [Required, MaxLength(100)]
         [JsonProperty("city")]
         public string City { get; set; }
 
+        [Required, MaxLength(100)]
+        [JsonProperty("country")]
+        public string Country { get; set; }
+
+        [Required, MaxLength(100)]
         [JsonProperty("postCode")]
         public string PostCode { get; set; }
     }

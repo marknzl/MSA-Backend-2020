@@ -17,12 +17,15 @@ namespace StudentSIMS.Models
         [JsonPropertyName("firstName")]
         public string FirstName { get; set; }
 
+        [Required]
         [JsonPropertyName("lastName")]
         public string LastName { get; set; }
 
+        [Required]
         [JsonPropertyName("emailAddress")]
         public string EmailAddress { get; set; }
 
+        [Required]
         [JsonPropertyName("phoneNumber")]
         public string PhoneNumber { get; set; }
 
