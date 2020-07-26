@@ -27,10 +27,10 @@ namespace StudentSIMS.Controllers
             return await _context.Addresses.ToListAsync();
         }
 
-        [HttpGet("ById/{id}")]
-        public async Task<ActionResult<Address>> GetAddressById(int id)
+        [HttpGet("ByAddressId/{addressId}")]
+        public async Task<ActionResult<Address>> GetAddressById(int addressId)
         {
-            var address = await _context.Addresses.FindAsync(id);
+            var address = await _context.Addresses.FindAsync(addressId);
 
             if (address == null)
             {
@@ -53,8 +53,42 @@ namespace StudentSIMS.Controllers
             return address;
         }
 
-        [HttpPut("{studentId}")]
-        public async Task<IActionResult> PutAddress(int studentId, Address address)
+        [HttpPut("ByAddressId/{addressId}")]
+        public async Task<IActionResult> PutAddressById(int addressId, Address address)
+        {
+            if (addressId != address.Id)
+            {
+                return BadRequest();
+            }
+
+            if (!AddressExists(address.Id))
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(address).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AddressExists(address.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("ByStudentId/{studentId}")]
+        public async Task<IActionResult> PutAddressByStudentId(int studentId, Address address)
         {
             if (studentId != address.StudentId)
             {
@@ -99,7 +133,7 @@ namespace StudentSIMS.Controllers
 
             if (student == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
             var studentAddress = await _context.Addresses.FirstOrDefaultAsync(a => a.StudentId == address.StudentId);
@@ -114,10 +148,10 @@ namespace StudentSIMS.Controllers
             return CreatedAtAction("GetAddress", new { id = address.Id }, address);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Address>> DeleteAddress(int id)
+        [HttpDelete("ByAddressId/{addressId}")]
+        public async Task<ActionResult<Address>> DeleteAddressById(int addressId)
         {
-            var address = await _context.Addresses.FindAsync(id);
+            var address = await _context.Addresses.FindAsync(addressId);
             if (address == null)
             {
                 return NotFound();
@@ -128,6 +162,28 @@ namespace StudentSIMS.Controllers
 
             return address;
         }
+
+        [HttpDelete("ByStudentId/{studentId}")]
+        public async Task<ActionResult<Address>> DeleteAddressByStudentId(int studentId)
+        {
+            var student = await _context.Students.FirstOrDefaultAsync(s => s.StudentId == studentId);
+            if (student == null)
+            {
+                return BadRequest();
+            }
+
+            var address = await _context.Addresses.FirstOrDefaultAsync(a => a.StudentId == student.StudentId);
+            if (address == null)
+            {
+                return NotFound();
+            }
+
+            _context.Addresses.Remove(address);
+            await _context.SaveChangesAsync();
+
+            return address;
+        }
+
 
         private bool AddressExists(int id)
         {
