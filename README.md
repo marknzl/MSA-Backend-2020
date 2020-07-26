@@ -4,10 +4,20 @@ This is my submission for the Microsoft Student Accelerator Phase 1 backend assi
 # Intro
 This is a simple Web API backend written in C# using the ASP.NET Core framework. The API just simply manages students and allows you to associate addresses with students. The CRUD operations on both these entities are exposed via the `/api/Students/` and `/api/Addresses/` endpoints (as shown in the screenshots below). You can view a live version [here](https://msa-studentsims.azurewebsites.net/index.html).
 
-# SQL database structure screenshot:
+# SQL database screenshots:
+
+## Database structure:
 `Students` and `Addresses` table:
 
 ![Tables](/StudentSIMS/Screenshots/tables.JPG?raw=true "Table screenshot")
+
+## Example data:
+
+`Students`:
+![Students](/StudentSIMS/Screenshots/students.JPG?raw=true "Students example data screenshot")
+
+`Addresses`:
+![Addresses](/StudentSIMS/Screenshots/addresses.JPG?raw=true "Addresses example data screenshot")
 
 # SwaggerUI endpoints:
 
